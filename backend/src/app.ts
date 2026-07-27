@@ -12,7 +12,7 @@ import { logger } from './middleware/logger';
 import authRoutes from './routes/auth.routes';
 import portfolioRoutes from './routes/portfolio.routes';
 // import projectRoutes from './routes/project.routes';
-// import messageRoutes from './routes/message.routes';
+import messageRoutes from './routes/message.routes';
 import uploadRoutes from './routes/upload.routes';
 
 const app = express();
@@ -54,7 +54,7 @@ app.get('/health', (_req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/portfolio', portfolioRoutes);
 // app.use('/api/projects', projectRoutes);
-// app.use('/api/messages', messageRoutes);
+app.use('/api/messages', messageRoutes);
 app.use('/api/upload', uploadRoutes);
 
 // ── Error Handling ────────────────────────────────────────

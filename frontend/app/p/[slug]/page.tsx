@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { portfolioService } from '@/services/portfolio';
 import { FullPortfolioPreview } from '@/components/portfolio/PreviewComponents';
+import { ContactForm } from '@/components/portfolio/ContactForm';
 import type { Metadata } from 'next';
 
 type Props = {
@@ -30,8 +31,15 @@ export default async function PublicPortfolioPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-slate-100 dark:bg-slate-950 flex flex-col items-center p-4 md:p-8">
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-4xl space-y-8">
         <FullPortfolioPreview portfolio={portfolio} />
+        
+        <div className="bg-background shadow-sm border rounded-md overflow-hidden p-8">
+          <h2 className="text-2xl font-bold mb-6 text-center">Get in Touch</h2>
+          <div className="max-w-lg mx-auto">
+            <ContactForm slug={params.slug} />
+          </div>
+        </div>
       </div>
     </div>
   );
