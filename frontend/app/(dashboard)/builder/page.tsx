@@ -4,6 +4,11 @@ import React from 'react';
 import { usePortfolio } from '@/context/PortfolioContext';
 import { Button } from '@/components/ui/button';
 import { FullPortfolioPreview } from '@/components/portfolio/PreviewComponents';
+import { HeroEditor } from '@/components/portfolio/editors/HeroEditor';
+import { AboutEditor } from '@/components/portfolio/editors/AboutEditor';
+import { SkillsEditor } from '@/components/portfolio/editors/SkillsEditor';
+import { ProjectsEditor } from '@/components/portfolio/editors/ProjectsEditor';
+import { EducationEditor, ExperienceEditor, ContactEditor, SettingsEditor } from '@/components/portfolio/editors/PlaceholderEditors';
 
 const sections = [
   { id: 'hero', label: 'Hero Section' },
@@ -18,6 +23,20 @@ const sections = [
 
 export default function BuilderPage() {
   const { portfolio, activeSection, setActiveSection } = usePortfolio();
+
+  const renderEditor = () => {
+    switch (activeSection) {
+      case 'hero': return <HeroEditor />;
+      case 'about': return <AboutEditor />;
+      case 'skills': return <SkillsEditor />;
+      case 'projects': return <ProjectsEditor />;
+      case 'education': return <EducationEditor />;
+      case 'experience': return <ExperienceEditor />;
+      case 'contact': return <ContactEditor />;
+      case 'settings': return <SettingsEditor />;
+      default: return null;
+    }
+  };
 
   return (
     <div className="flex h-[calc(100vh-80px)] overflow-hidden border rounded-xl bg-background">
@@ -41,13 +60,11 @@ export default function BuilderPage() {
         </div>
       </aside>
 
-      {/* Editor Panel (Placeholder for Phase 6) */}
-      <section className="w-80 border-r bg-card flex flex-col">
+      {/* Editor Panel */}
+      <section className="w-96 border-r bg-card flex flex-col">
         <div className="p-4 border-b font-semibold capitalize">{activeSection} Editor</div>
         <div className="flex-1 overflow-y-auto p-4">
-          <p className="text-sm text-muted-foreground">
-            Editor form for <strong>{activeSection}</strong> will be implemented in Phase 6.
-          </p>
+          {renderEditor()}
         </div>
       </section>
 

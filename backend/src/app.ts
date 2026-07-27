@@ -13,7 +13,7 @@ import authRoutes from './routes/auth.routes';
 import portfolioRoutes from './routes/portfolio.routes';
 // import projectRoutes from './routes/project.routes';
 // import messageRoutes from './routes/message.routes';
-// import uploadRoutes from './routes/upload.routes';
+import uploadRoutes from './routes/upload.routes';
 
 const app = express();
 
@@ -55,7 +55,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/portfolio', portfolioRoutes);
 // app.use('/api/projects', projectRoutes);
 // app.use('/api/messages', messageRoutes);
-// app.use('/api/upload', uploadRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // ── Error Handling ────────────────────────────────────────
 app.use(notFound);
