@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getMyPortfolio, createPortfolio } from '../controllers/portfolio.controller';
+import { getMyPortfolio, createPortfolio, updatePortfolio } from '../controllers/portfolio.controller';
 import { requireAuth } from '../middleware/auth';
 
 const router = Router();
@@ -9,5 +9,6 @@ router.use(requireAuth);
 
 router.get('/me', getMyPortfolio);
 router.post('/', createPortfolio);
+router.put('/:id', updatePortfolio);
 
 export default router;

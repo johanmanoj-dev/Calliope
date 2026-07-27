@@ -19,4 +19,9 @@ export const portfolioService = {
     const response = await api.post(API_ROUTES.PORTFOLIO.BASE);
     return response.data.data.portfolio;
   },
+
+  async updatePortfolio(id: string, data: Partial<IPortfolio>): Promise<IPortfolio> {
+    const response = await api.put(`${API_ROUTES.PORTFOLIO.BASE}/${id}`, data);
+    return response.data.data.portfolio;
+  },
 };

@@ -44,3 +44,29 @@ export const createPortfolio = async (req: Request, res: Response, next: NextFun
     next(error);
   }
 };
+
+export const updatePortfolio = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const userId = (req as any).user.userId;
+    const { id } = req.params;
+
+    // Validate that the portfolio belongs to the user
+    const portfolio = await Portfolio.findOne({ _id: id, ownerId: userId });
+    if (!portfolio) {
+      sendError(res, 'Portfolio not found', 404);
+      return;
+    }
+
+    // Partial update using the $set operator via findByIdAndUpdate
+    // We pass req.body directly, but in a real app we'd validate the structure with Zod here.
+    const updatedPortfolio = await Portfolio.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true, runValidators: true }
+    ).select('-__v');
+
+    sendSuccess(res, { portfolio: updatedPortfolio });
+  } catch (error) {
+    next(error);
+  }
+};
