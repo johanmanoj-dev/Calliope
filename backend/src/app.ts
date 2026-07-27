@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { config } from './config/env';
 import { errorHandler } from './middleware/errorHandler';
 import { notFound } from './middleware/notFound';
+import { logger } from './middleware/logger';
 
 // Route imports (will be added in later phases)
 // import authRoutes from './routes/auth.routes';
@@ -15,6 +16,8 @@ import { notFound } from './middleware/notFound';
 // import uploadRoutes from './routes/upload.routes';
 
 const app = express();
+
+app.use(logger);
 
 // ── Security ──────────────────────────────────────────────
 app.use(helmet());

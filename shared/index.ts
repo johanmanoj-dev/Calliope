@@ -4,3 +4,5 @@ export * from './types/message';
 export * from './constants/routes';
 export * from './constants/themes';
 export * from './constants/defaults';
+export * from './schemas/portfolio';
+export * from './schemas/message';
