@@ -8,7 +8,10 @@ import { HeroEditor } from '@/components/portfolio/editors/HeroEditor';
 import { AboutEditor } from '@/components/portfolio/editors/AboutEditor';
 import { SkillsEditor } from '@/components/portfolio/editors/SkillsEditor';
 import { ProjectsEditor } from '@/components/portfolio/editors/ProjectsEditor';
-import { EducationEditor, ExperienceEditor, ContactEditor, SettingsEditor } from '@/components/portfolio/editors/PlaceholderEditors';
+import { EducationEditor } from '@/components/portfolio/editors/EducationEditor';
+import { ExperienceEditor } from '@/components/portfolio/editors/ExperienceEditor';
+import { ContactEditor } from '@/components/portfolio/editors/ContactEditor';
+import { SettingsEditor } from '@/components/portfolio/editors/SettingsEditor';
 
 const sections = [
   { id: 'hero', label: 'Hero Section' },
