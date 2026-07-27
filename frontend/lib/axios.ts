@@ -16,7 +16,9 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Auth expired — let the auth context handle redirect
-      window.dispatchEvent(new CustomEvent('auth:expired'));
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('auth:expired'));
+      }
     }
     return Promise.reject(error);
   }

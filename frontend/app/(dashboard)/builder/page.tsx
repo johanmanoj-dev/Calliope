@@ -13,7 +13,9 @@ import { EducationEditor } from '@/components/portfolio/editors/EducationEditor'
 import { ExperienceEditor } from '@/components/portfolio/editors/ExperienceEditor';
 import { ContactEditor } from '@/components/portfolio/editors/ContactEditor';
 import { SettingsEditor } from '@/components/portfolio/editors/SettingsEditor';
-import { Check, Loader2, CloudOff } from 'lucide-react';
+import { Check, Loader2, CloudOff, ExternalLink, Link as LinkIcon, Send } from 'lucide-react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { portfolioService } from '@/services/portfolio';
 
 const sections = [
   { id: 'hero', label: 'Hero Section' },
@@ -27,8 +29,26 @@ const sections = [
 ];
 
 export default function BuilderPage() {
+  const queryClient = useQueryClient();
   const { portfolio, activeSection, setActiveSection } = usePortfolio();
   const { saveStatus } = useAutoSave(portfolio);
+
+  const publishMutation = useMutation({
+    mutationFn: () => {
+      if (!portfolio?._id) throw new Error('No portfolio ID');
+      return portfolioService.publishPortfolio(portfolio._id);
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(['portfolio', 'me'], data);
+    },
+  });
+
+  const handleCopyLink = () => {
+    if (portfolio?.publishedUrl) {
+      navigator.clipboard.writeText(portfolio.publishedUrl);
+      alert('Link copied to clipboard!');
+    }
+  };
 
   const renderEditor = () => {
     switch (activeSection) {
@@ -86,9 +106,23 @@ export default function BuilderPage() {
         <div className="w-full max-w-4xl">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-semibold">Live Preview</h2>
-            <Button variant="outline" size="sm" onClick={() => window.open(`/p/${portfolio?.slug}`, '_blank')}>
-              View Public Page
-            </Button>
+            <div className="flex items-center gap-2">
+              {portfolio?.isPublished ? (
+                <>
+                  <Button variant="outline" size="sm" onClick={handleCopyLink}>
+                    <LinkIcon className="w-4 h-4 mr-2" /> Copy Link
+                  </Button>
+                  <Button size="sm" onClick={() => window.open(`/p/${portfolio.slug}`, '_blank')}>
+                    <ExternalLink className="w-4 h-4 mr-2" /> View Live
+                  </Button>
+                </>
+              ) : (
+                <Button size="sm" onClick={() => publishMutation.mutate()} disabled={publishMutation.isPending}>
+                  {publishMutation.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Send className="w-4 h-4 mr-2" />}
+                  Publish Portfolio
+                </Button>
+              )}
+            </div>
           </div>
           
           <FullPortfolioPreview portfolio={portfolio} />

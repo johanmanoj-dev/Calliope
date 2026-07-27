@@ -70,3 +70,66 @@ export const updatePortfolio = async (req: Request, res: Response, next: NextFun
     next(error);
   }
 };
+
+export const publishPortfolio = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const userId = (req as any).user.userId;
+    const { id } = req.params;
+
+    const portfolio = await Portfolio.findOne({ _id: id, ownerId: userId });
+    if (!portfolio) {
+      sendError(res, 'Portfolio not found', 404);
+      return;
+    }
+
+    if (portfolio.isPublished && portfolio.slug) {
+      sendSuccess(res, { slug: portfolio.slug, url: portfolio.publishedUrl }, 'Portfolio already published');
+      return;
+    }
+
+    const { generateSlugWithFallback } = await import('../utils/generateSlug');
+    const baseSlug = generateSlugWithFallback(portfolio.hero?.name || 'portfolio');
+    
+    let slug = baseSlug;
+    let counter = 1;
+    let isUnique = false;
+
+    while (!isUnique) {
+      const existing = await Portfolio.findOne({ slug });
+      if (existing) {
+        slug = `${baseSlug}-${counter}`;
+        counter++;
+      } else {
+        isUnique = true;
+      }
+    }
+
+    const publishedUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/p/${slug}`;
+
+    const updatedPortfolio = await Portfolio.findByIdAndUpdate(
+      id,
+      { isPublished: true, slug, publishedUrl },
+      { new: true }
+    );
+
+    sendSuccess(res, { portfolio: updatedPortfolio }, 'Portfolio published successfully');
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getPublicPortfolio = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { slug } = req.params;
+    const portfolio = await Portfolio.findOne({ slug, isPublished: true }).select('-__v');
+
+    if (!portfolio) {
+      sendError(res, 'Portfolio not found', 404);
+      return;
+    }
+
+    sendSuccess(res, { portfolio });
+  } catch (error) {
+    next(error);
+  }
+};
