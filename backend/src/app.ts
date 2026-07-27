@@ -10,7 +10,7 @@ import { logger } from './middleware/logger';
 
 // Route imports (will be added in later phases)
 import authRoutes from './routes/auth.routes';
-// import portfolioRoutes from './routes/portfolio.routes';
+import portfolioRoutes from './routes/portfolio.routes';
 // import projectRoutes from './routes/project.routes';
 // import messageRoutes from './routes/message.routes';
 // import uploadRoutes from './routes/upload.routes';
@@ -52,7 +52,7 @@ app.get('/health', (_req, res) => {
 
 // ── API Routes ────────────────────────────────────────────
 app.use('/api/auth', authRoutes);
-// app.use('/api/portfolio', portfolioRoutes);
+app.use('/api/portfolio', portfolioRoutes);
 // app.use('/api/projects', projectRoutes);
 // app.use('/api/messages', messageRoutes);
 // app.use('/api/upload', uploadRoutes);
