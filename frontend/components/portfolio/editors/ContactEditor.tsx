@@ -8,6 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useEffect } from 'react';
 
+import { TextFormattingControls } from './TextFormattingControls';
+
 export function ContactEditor() {
   const { portfolio, updateSection } = usePortfolio();
 
@@ -30,27 +32,31 @@ export function ContactEditor() {
 
   return (
     <form className="space-y-6">
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label htmlFor="email">Public Email</Label>
-        <Input id="email" type="email" {...form.register('email')} placeholder="hello@example.com" />
+        <Input id="email" type="email" {...form.register('email')} />
+        <TextFormattingControls fieldKey="contact.email" colorOnly label="Link Color" defaultColor="#7C3AED" />
         {form.formState.errors.email && <p className="text-sm text-destructive">{form.formState.errors.email.message as string}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label htmlFor="linkedin">LinkedIn URL</Label>
-        <Input id="linkedin" type="url" {...form.register('linkedin')} placeholder="https://linkedin.com/in/..." />
+        <Input id="linkedin" type="url" {...form.register('linkedin')} />
+        <TextFormattingControls fieldKey="contact.linkedin" colorOnly label="Link Color" defaultColor="#7C3AED" />
         {form.formState.errors.linkedin && <p className="text-sm text-destructive">{form.formState.errors.linkedin.message as string}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label htmlFor="github">GitHub URL</Label>
-        <Input id="github" type="url" {...form.register('github')} placeholder="https://github.com/..." />
+        <Input id="github" type="url" {...form.register('github')} />
+        <TextFormattingControls fieldKey="contact.github" colorOnly label="Link Color" defaultColor="#7C3AED" />
         {form.formState.errors.github && <p className="text-sm text-destructive">{form.formState.errors.github.message as string}</p>}
       </div>
       
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label htmlFor="website">Personal Website URL</Label>
-        <Input id="website" type="url" {...form.register('website')} placeholder="https://..." />
+        <Input id="website" type="url" {...form.register('website')} />
+        <TextFormattingControls fieldKey="contact.website" colorOnly label="Link Color" defaultColor="#7C3AED" />
         {form.formState.errors.website && <p className="text-sm text-destructive">{form.formState.errors.website.message as string}</p>}
       </div>
     </form>

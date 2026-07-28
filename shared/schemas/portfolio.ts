@@ -40,12 +40,20 @@ export const EducationSchema = z.object({
   description: z.string().optional(),
 });
 
+export const EducationArraySchema = z.object({
+  education: z.array(EducationSchema),
+});
+
 export const ExperienceSchema = z.object({
   _id: z.string().optional(),
   organization: z.string().min(1, 'Organization is required'),
   position: z.string().min(1, 'Position is required'),
   period: z.string().min(1, 'Period is required'),
   description: z.string().optional(),
+});
+
+export const ExperienceArraySchema = z.object({
+  experience: z.array(ExperienceSchema),
 });
 
 export const ContactSchema = z.object({
@@ -68,3 +76,4 @@ export const PortfolioUpdateSchema = z.object({
 });
 
 export type PortfolioUpdateData = z.infer<typeof PortfolioUpdateSchema>;
+

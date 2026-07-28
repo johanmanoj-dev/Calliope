@@ -27,8 +27,8 @@ export const API_ROUTES = {
 export const FRONTEND_ROUTES = {
   HOME: '/',
   DASHBOARD: '/dashboard',
-  BUILDER: '/dashboard/builder',
-  INBOX: '/dashboard/inbox',
-  SETTINGS: '/dashboard/settings',
-  PUBLIC_PORTFOLIO: (username: string) => `/portfolio/${username}`,
+  BUILDER: '/builder',
+  INBOX: '/inbox',
+  SETTINGS: '/settings',
+  PUBLIC_PORTFOLIO: (slug: string) => `/p/${slug}`,
 } as const;

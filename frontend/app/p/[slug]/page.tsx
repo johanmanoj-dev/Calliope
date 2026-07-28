@@ -1,43 +1,73 @@
-import { notFound } from 'next/navigation';
-import { portfolioService } from '@/services/portfolio';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { FullPortfolioPreview } from '@/components/portfolio/PreviewComponents';
 import { ContactForm } from '@/components/portfolio/ContactForm';
-import type { Metadata } from 'next';
+import type { IPortfolio } from '@shared/types/portfolio';
+import { Loader2 } from 'lucide-react';
 
-type Props = {
-  params: { slug: string };
-};
+export default function PublicPortfolioPage() {
+  const params = useParams();
+  const slug = params.slug as string;
 
-// Generate metadata for SEO based on portfolio data
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const portfolio = await portfolioService.getPublicPortfolio(params.slug);
-  
-  if (!portfolio) {
-    return { title: 'Not Found' };
+  const [portfolio, setPortfolio] = useState<IPortfolio | null>(null);
+  const [status, setStatus] = useState<'loading' | 'found' | 'notfound'>('loading');
+
+  useEffect(() => {
+    if (!slug) return;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
+    fetch(`${apiUrl}/api/portfolio/public/${slug}`)
+      .then((res) => {
+        if (!res.ok) throw new Error('not found');
+        return res.json();
+      })
+      .then((json) => {
+        setPortfolio(json.data.portfolio);
+        setStatus('found');
+      })
+      .catch(() => setStatus('notfound'));
+  }, [slug]);
+
+  if (status === 'loading') {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
   }
 
-  return {
-    title: portfolio.hero?.name ? `${portfolio.hero.name} - Portfolio` : 'Portfolio',
-    description: portfolio.hero?.intro || portfolio.about?.shortBio || 'A Calliope Portfolio',
-  };
-}
-
-export default async function PublicPortfolioPage({ params }: Props) {
-  const portfolio = await portfolioService.getPublicPortfolio(params.slug);
-
-  if (!portfolio) {
-    notFound();
+  if (status === 'notfound' || !portfolio) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center text-center p-8">
+        <h1 className="text-4xl font-bold mb-4">404</h1>
+        <p className="text-muted-foreground">This portfolio doesn't exist or hasn't been published yet.</p>
+      </div>
+    );
   }
+
+  const ts = portfolio.themeSettings || {};
+  const bgColor = ts.bgColor || '#F2EAE0';
+  const cardBgColor = ts.cardBgColor || 'rgba(255, 255, 255, 0.92)';
+  const textColor = ts.textColor || '#1E293B';
+  const fontFamily = ts.fontFamily || 'Plus Jakarta Sans';
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 flex flex-col items-center p-4 md:p-8">
-      <div className="w-full max-w-4xl space-y-8">
+    <div
+      className="min-h-screen flex flex-col items-center p-4 md:p-8 transition-colors duration-300"
+      style={{ backgroundColor: bgColor, fontFamily: fontFamily }}
+    >
+      <div className="w-full max-w-5xl space-y-8">
         <FullPortfolioPreview portfolio={portfolio} />
-        
-        <div className="bg-background shadow-sm border rounded-md overflow-hidden p-8">
-          <h2 className="text-2xl font-bold mb-6 text-center">Get in Touch</h2>
+
+        <div
+          className="shadow-xl border border-black/10 rounded-2xl overflow-hidden p-4 sm:p-8 backdrop-blur-md transition-all duration-300"
+          style={{ backgroundColor: cardBgColor, color: textColor }}
+        >
+          <h2 className="text-2xl font-bold mb-6 text-center tracking-tight">Get in Touch</h2>
           <div className="max-w-lg mx-auto">
-            <ContactForm slug={params.slug} />
+            <ContactForm slug={slug} />
           </div>
         </div>
       </div>

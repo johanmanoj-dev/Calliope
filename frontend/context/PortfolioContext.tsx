@@ -11,6 +11,7 @@ interface PortfolioContextType {
   activeSection: SectionType;
   setActiveSection: (section: SectionType) => void;
   updateSection: (section: keyof IPortfolio, data: any) => void;
+  updatePortfolio: (patch: Partial<IPortfolio>) => void;
 }
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(undefined);
@@ -35,6 +36,16 @@ export function PortfolioProvider({ children, initialPortfolio }: { children: Re
     });
   };
 
+  const updatePortfolio = (patch: Partial<IPortfolio>) => {
+    setPortfolio((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        ...patch,
+      };
+    });
+  };
+
   return (
     <PortfolioContext.Provider
       value={{
@@ -43,6 +54,7 @@ export function PortfolioProvider({ children, initialPortfolio }: { children: Re
         activeSection,
         setActiveSection,
         updateSection,
+        updatePortfolio,
       }}
     >
       {children}

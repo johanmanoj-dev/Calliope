@@ -11,6 +11,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Plus, Trash2 } from 'lucide-react';
 import { useEffect } from 'react';
 
+import { TextFormattingControls } from './TextFormattingControls';
+
 export function ExperienceEditor() {
   const { portfolio, updateSection } = usePortfolio();
 
@@ -53,22 +55,24 @@ export function ExperienceEditor() {
             
             <div className="space-y-2 pt-4">
               <Label>Organization</Label>
-              <Input {...form.register(`experience.${index}.organization`)} placeholder="Company Name" />
+              <Input {...form.register(`experience.${index}.organization`)} />
             </div>
+
+            <TextFormattingControls fieldKey={`experience.${index}.lineColor`} colorOnly label="Line Color" defaultColor="#7C3AED" />
 
             <div className="space-y-2">
               <Label>Position</Label>
-              <Input {...form.register(`experience.${index}.position`)} placeholder="Software Engineer" />
+              <Input {...form.register(`experience.${index}.position`)} />
             </div>
 
             <div className="space-y-2">
               <Label>Period</Label>
-              <Input {...form.register(`experience.${index}.period`)} placeholder="Jan 2021 - Present" />
+              <Input {...form.register(`experience.${index}.period`)} />
             </div>
 
             <div className="space-y-2">
               <Label>Description</Label>
-              <Textarea {...form.register(`experience.${index}.description`)} placeholder="Key achievements..." />
+              <Textarea {...form.register(`experience.${index}.description`)} />
             </div>
           </div>
         ))}

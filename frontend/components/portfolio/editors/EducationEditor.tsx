@@ -11,6 +11,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Plus, Trash2 } from 'lucide-react';
 import { useEffect } from 'react';
 
+import { TextFormattingControls } from './TextFormattingControls';
+
 export function EducationEditor() {
   const { portfolio, updateSection } = usePortfolio();
 
@@ -53,22 +55,24 @@ export function EducationEditor() {
             
             <div className="space-y-2 pt-4">
               <Label>Institution</Label>
-              <Input {...form.register(`education.${index}.institution`)} placeholder="University Name" />
+              <Input {...form.register(`education.${index}.institution`)} />
             </div>
+
+            <TextFormattingControls fieldKey={`education.${index}.lineColor`} colorOnly label="Line Color" defaultColor="#7C3AED" />
 
             <div className="space-y-2">
               <Label>Degree</Label>
-              <Input {...form.register(`education.${index}.degree`)} placeholder="B.S. Computer Science" />
+              <Input {...form.register(`education.${index}.degree`)} />
             </div>
 
             <div className="space-y-2">
               <Label>Duration</Label>
-              <Input {...form.register(`education.${index}.duration`)} placeholder="2018 - 2022" />
+              <Input {...form.register(`education.${index}.duration`)} />
             </div>
 
             <div className="space-y-2">
               <Label>Description (Optional)</Label>
-              <Textarea {...form.register(`education.${index}.description`)} placeholder="Minor, GPA, activities..." />
+              <Textarea {...form.register(`education.${index}.description`)} />
             </div>
           </div>
         ))}

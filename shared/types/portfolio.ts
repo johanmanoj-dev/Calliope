@@ -54,6 +54,15 @@ export interface IContact {
   other?: string[];
 }
 
+export interface IThemeSettings {
+  bgColor?: string;
+  cardBgColor?: string;
+  textColor?: string;
+  accentColor?: string;
+  fontFamily?: string;
+  isBoldText?: boolean;
+}
+
 export interface IPortfolio {
   _id: string;
   ownerId: string;
@@ -65,6 +74,7 @@ export interface IPortfolio {
   experience: IExperience[];
   contact: IContact;
   socialLinks: string[];
+  themeSettings?: IThemeSettings;
   slug?: string;
   isPublished: boolean;
   publishedUrl?: string;

@@ -12,6 +12,8 @@ import { Label } from '@/components/ui/label';
 import { uploadImage } from '@/services/upload';
 import { useState, useEffect } from 'react';
 
+import { TextFormattingControls } from './TextFormattingControls';
+
 export function HeroEditor() {
   const { portfolio, updateSection } = usePortfolio();
   const [isUploading, setIsUploading] = useState(false);
@@ -70,32 +72,36 @@ export function HeroEditor() {
         {isUploading && <p className="text-sm text-muted-foreground">Uploading...</p>}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label htmlFor="name">Full Name</Label>
-        <Input id="name" {...form.register('name')} placeholder="Jane Doe" />
+        <Input id="name" {...form.register('name')} />
+        <TextFormattingControls fieldKey="hero.name" />
         {form.formState.errors.name && <p className="text-sm text-destructive">{form.formState.errors.name.message as string}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label htmlFor="title">Headline / Title</Label>
-        <Input id="title" {...form.register('title')} placeholder="Full Stack Developer" />
+        <Input id="title" {...form.register('title')} />
+        <TextFormattingControls fieldKey="hero.title" />
         {form.formState.errors.title && <p className="text-sm text-destructive">{form.formState.errors.title.message as string}</p>}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label htmlFor="introduction">Short Introduction</Label>
-        <Textarea id="introduction" {...form.register('introduction')} placeholder="I build things for the web." />
+        <Textarea id="introduction" {...form.register('introduction')} />
+        <TextFormattingControls fieldKey="hero.introduction" />
         {form.formState.errors.introduction && <p className="text-sm text-destructive">{form.formState.errors.introduction.message as string}</p>}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="location">Location (Optional)</Label>
-        <Input id="location" {...form.register('location')} placeholder="San Francisco, CA" />
+        <Input id="location" {...form.register('location')} />
       </div>
       
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label htmlFor="resumeUrl">Resume URL (Optional)</Label>
-        <Input id="resumeUrl" {...form.register('resumeUrl')} placeholder="https://link-to-resume.pdf" />
+        <Input id="resumeUrl" {...form.register('resumeUrl')} />
+        <TextFormattingControls fieldKey="hero.resumeButton" colorOnly label="Resume Button Color" defaultColor="#7C3AED" />
       </div>
     </form>
   );

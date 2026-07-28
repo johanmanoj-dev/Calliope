@@ -44,11 +44,11 @@ export function SkillsEditor() {
             <div className="flex-1 space-y-4">
               <div className="space-y-2">
                 <Label>Skill Name</Label>
-                <Input {...form.register(`skills.${index}.name`)} placeholder="e.g. React" />
+                <Input {...form.register(`skills.${index}.name`)} />
               </div>
               <div className="space-y-2">
                 <Label>Logo URL</Label>
-                <Input {...form.register(`skills.${index}.logoUrl`)} placeholder="https://..." />
+                <Input {...form.register(`skills.${index}.logoUrl`)} />
               </div>
             </div>
             <Button variant="ghost" size="icon" onClick={() => remove(index)} className="text-destructive mt-8">

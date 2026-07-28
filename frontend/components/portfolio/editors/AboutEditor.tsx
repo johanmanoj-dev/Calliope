@@ -8,6 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useEffect } from 'react';
 
+import { TextFormattingControls } from './TextFormattingControls';
+
 export function AboutEditor() {
   const { portfolio, updateSection } = usePortfolio();
 
@@ -31,24 +33,26 @@ export function AboutEditor() {
 
   return (
     <form className="space-y-6">
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label htmlFor="biography">Biography</Label>
         <Textarea 
           id="biography" 
           {...form.register('biography')} 
-          placeholder="Tell your story..." 
-          className="min-h-[150px]"
+          className="min-h-[120px]"
         />
+        <TextFormattingControls fieldKey="about.biography" />
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label htmlFor="personalIntro">Personal Intro (Optional)</Label>
         <Textarea id="personalIntro" {...form.register('personalIntro')} />
+        <TextFormattingControls fieldKey="about.personalIntro" />
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1">
         <Label htmlFor="areasOfExpertise">Areas of Expertise (Optional)</Label>
         <Textarea id="areasOfExpertise" {...form.register('areasOfExpertise')} />
+        <TextFormattingControls fieldKey="about.areasOfExpertise" />
       </div>
     </form>
   );

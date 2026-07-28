@@ -37,11 +37,21 @@ export const findOrCreateUser = async (googlePayload: any) => {
         profilePicture,
       });
     }
-  } else if (user.profilePicture !== profilePicture || user.name !== name) {
-    // Sync profile updates from Google
-    user.profilePicture = profilePicture || user.profilePicture;
-    user.name = name || user.name;
-    await user.save();
+  } else {
+    const isCustomPfp = user.profilePicture && !user.profilePicture.includes('googleusercontent.com');
+    let hasChanges = false;
+    
+    if (!isCustomPfp && profilePicture && user.profilePicture !== profilePicture) {
+      user.profilePicture = profilePicture;
+      hasChanges = true;
+    }
+    if (name && user.name !== name) {
+      user.name = name;
+      hasChanges = true;
+    }
+    if (hasChanges) {
+      await user.save();
+    }
   }
 
   return user;

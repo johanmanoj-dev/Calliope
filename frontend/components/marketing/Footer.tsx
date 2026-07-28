@@ -2,16 +2,23 @@ import Link from 'next/link';
 
 export function Footer() {
   return (
-    <footer className="w-full border-t bg-background py-6 md:py-12">
-      <div className="container flex flex-col items-center justify-between gap-4 md:flex-row md:gap-0 px-4 md:px-6">
-        <div className="flex flex-col items-center gap-2 md:items-start">
-          <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            Built by Calliope Team. Hosted anywhere. The source code is available on GitHub.
-          </p>
+    <footer
+      className="relative w-full border-t border-white/[0.06] bg-[#0A0A0F] py-10"
+    >
+      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 px-6 md:px-12">
+        <div className="flex items-center gap-2.5">
+          <img src="/logo.png" alt="Calliope Logo" className="h-8 w-8 object-contain" />
+          <span className="font-extrabold tracking-[0.2em] text-white text-lg sm:text-xl">
+            CΛLL<span className="text-violet-400 font-normal">i</span>OPE
+          </span>
         </div>
-        <div className="flex items-center gap-4 text-sm font-medium">
-          <Link href="/terms" className="text-muted-foreground hover:underline underline-offset-4">Terms</Link>
-          <Link href="/privacy" className="text-muted-foreground hover:underline underline-offset-4">Privacy</Link>
+        <p className="text-[#9E9BAE] text-xs text-center">
+          © {new Date().getFullYear()} Calliope.
+        </p>
+        <div className="flex items-center gap-5 text-xs font-medium text-[#9E9BAE]">
+          <a href="https://github.com/johanmanoj-dev" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            About
+          </a>
         </div>
       </div>
     </footer>

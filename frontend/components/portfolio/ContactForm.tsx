@@ -53,19 +53,19 @@ export function ContactForm({ slug }: { slug: string }) {
 
       <div className="space-y-2">
         <Label htmlFor="visitorName">Name</Label>
-        <Input id="visitorName" {...form.register('visitorName')} placeholder="Jane Doe" disabled={mutation.isPending} />
+        <Input id="visitorName" {...form.register('visitorName')} disabled={mutation.isPending} className="border border-black/20 dark:border-white/20" />
         {form.formState.errors.visitorName && <p className="text-sm text-destructive">{form.formState.errors.visitorName.message}</p>}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="visitorContact">Email or Phone</Label>
-        <Input id="visitorContact" {...form.register('visitorContact')} placeholder="jane@example.com" disabled={mutation.isPending} />
+        <Input id="visitorContact" {...form.register('visitorContact')} disabled={mutation.isPending} className="border border-black/20 dark:border-white/20" />
         {form.formState.errors.visitorContact && <p className="text-sm text-destructive">{form.formState.errors.visitorContact.message}</p>}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="message">Message</Label>
-        <Textarea id="message" {...form.register('message')} placeholder="Hello, I'd like to talk about..." rows={5} disabled={mutation.isPending} />
+        <Textarea id="message" {...form.register('message')} rows={5} disabled={mutation.isPending} className="border border-black/20 dark:border-white/20" />
         {form.formState.errors.message && <p className="text-sm text-destructive">{form.formState.errors.message.message}</p>}
       </div>
 

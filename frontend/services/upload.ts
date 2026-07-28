@@ -1,34 +1,22 @@
-import ImageKit from '@imagekit/javascript';
+import { upload } from '@imagekit/javascript';
 import api from '../lib/axios';
 
-const imagekit = new ImageKit({
-  publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY || '',
-  urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || '',
-  authenticator: async () => {
-    try {
-      const response = await api.get('/api/upload/auth');
-      const { signature, expire, token } = response.data.data;
-      return { signature, expire, token };
-    } catch (error) {
-      throw new Error(`Authentication request failed: ${error}`);
-    }
-  },
-});
+const getAuthParams = async () => {
+  const response = await api.get('/api/upload/auth');
+  const { signature, expire, token } = response.data.data;
+  return { signature, expire, token };
+};
 
 export const uploadImage = async (file: File): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    imagekit.upload(
-      {
-        file,
-        fileName: file.name,
-      },
-      (err, result) => {
-        if (err) {
-          reject(err);
-        } else if (result) {
-          resolve(result.url);
-        }
-      }
-    );
+  const authParams = await getAuthParams();
+
+  const result = await upload({
+    file,
+    fileName: file.name,
+    publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY || '',
+    urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || '',
+    ...authParams,
   });
+
+  return result.url;
 };

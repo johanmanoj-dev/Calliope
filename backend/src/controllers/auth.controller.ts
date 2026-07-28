@@ -62,3 +62,47 @@ export const getMe = async (req: Request, res: Response, next: NextFunction): Pr
     next(error);
   }
 };
+
+export const updateProfilePicture = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const userId = (req as any).user.userId;
+    const { profilePicture } = req.body;
+    
+    if (!profilePicture) {
+      sendError(res, 'profilePicture is required', 400);
+      return;
+    }
+
+    const user = await User.findByIdAndUpdate(userId, { profilePicture }, { new: true }).select('-__v');
+    if (!user) {
+      sendError(res, 'User not found', 404);
+      return;
+    }
+
+    sendSuccess(res, { user }, 'Profile picture updated successfully');
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateThemePreference = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const userId = (req as any).user.userId;
+    const { themePreference } = req.body;
+
+    if (!themePreference || !['light', 'dark', 'system'].includes(themePreference)) {
+      sendError(res, 'Invalid themePreference', 400);
+      return;
+    }
+
+    const user = await User.findByIdAndUpdate(userId, { themePreference }, { new: true }).select('-__v');
+    if (!user) {
+      sendError(res, 'User not found', 404);
+      return;
+    }
+
+    sendSuccess(res, { user }, 'Theme preference updated successfully');
+  } catch (error) {
+    next(error);
+  }
+};

@@ -19,4 +19,8 @@ export const inboxService = {
     const response = await api.get('/api/messages');
     return response.data.data.messages;
   },
+
+  async deleteMessage(id: string): Promise<void> {
+    await api.delete(`/api/messages/${id}`);
+  },
 };

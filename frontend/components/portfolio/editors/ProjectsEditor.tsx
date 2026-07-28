@@ -64,12 +64,12 @@ export function ProjectsEditor() {
             
             <div className="space-y-2 pt-4">
               <Label>Project Title</Label>
-              <Input {...form.register(`projects.${index}.title`)} placeholder="Awesome App" />
+              <Input {...form.register(`projects.${index}.title`)} />
             </div>
 
             <div className="space-y-2">
               <Label>Description</Label>
-              <Textarea {...form.register(`projects.${index}.description`)} placeholder="What does it do?" />
+              <Textarea {...form.register(`projects.${index}.description`)} />
             </div>
 
             <div className="space-y-2">
@@ -90,11 +90,11 @@ export function ProjectsEditor() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Live Link (Optional)</Label>
-                <Input {...form.register(`projects.${index}.liveLink`)} placeholder="https://..." />
+                <Input {...form.register(`projects.${index}.liveLink`)} />
               </div>
               <div className="space-y-2">
                 <Label>Source Link (Optional)</Label>
-                <Input {...form.register(`projects.${index}.sourceLink`)} placeholder="https://github.com/..." />
+                <Input {...form.register(`projects.${index}.sourceLink`)} />
               </div>
             </div>
           </div>

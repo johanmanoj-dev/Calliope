@@ -83,7 +83,7 @@ export const publishPortfolio = async (req: Request, res: Response, next: NextFu
     }
 
     if (portfolio.isPublished && portfolio.slug) {
-      sendSuccess(res, { slug: portfolio.slug, url: portfolio.publishedUrl }, 'Portfolio already published');
+      sendSuccess(res, { portfolio }, 'Portfolio already published');
       return;
     }
 

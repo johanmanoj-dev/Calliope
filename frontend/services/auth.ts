@@ -20,4 +20,14 @@ export const authService = {
       return null;
     }
   },
+
+  async updateProfilePicture(profilePicture: string): Promise<IUser> {
+    const response = await api.patch('/api/auth/profile-picture', { profilePicture });
+    return response.data.data.user;
+  },
+
+  async updateThemePreference(themePreference: string): Promise<IUser> {
+    const response = await api.patch('/api/auth/theme', { themePreference });
+    return response.data.data.user;
+  },
 };

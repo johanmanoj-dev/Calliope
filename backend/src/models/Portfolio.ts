@@ -56,6 +56,16 @@ const ContactSchema = new Schema<IContact>({
   other: [{ type: String }],
 });
 
+const ThemeSettingsSchema = new Schema({
+  bgColor: { type: String, default: '#F2EAE0' },
+  cardBgColor: { type: String, default: 'rgba(255, 255, 255, 0.92)' },
+  textColor: { type: String, default: '#1E293B' },
+  accentColor: { type: String, default: '#7C3AED' },
+  fontFamily: { type: String, default: 'Plus Jakarta Sans' },
+  isBoldText: { type: Boolean, default: false },
+  fieldStyles: { type: Schema.Types.Mixed, default: {} },
+});
+
 const PortfolioSchema = new Schema<IPortfolioDocument>(
   {
     ownerId: { type: String, required: true, unique: true }, // Links to User.googleId or User._id
@@ -67,6 +77,7 @@ const PortfolioSchema = new Schema<IPortfolioDocument>(
     experience: { type: [ExperienceSchema], default: [] },
     contact: { type: ContactSchema, default: () => ({}) },
     socialLinks: { type: [String], default: [] },
+    themeSettings: { type: ThemeSettingsSchema, default: () => ({}) },
     slug: { type: String, sparse: true, unique: true },
     isPublished: { type: Boolean, default: false },
     publishedUrl: { type: String },

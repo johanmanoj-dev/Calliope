@@ -49,3 +49,20 @@ export const getInboxMessages = async (req: Request, res: Response, next: NextFu
     next(error);
   }
 };
+
+export const deleteMessage = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const userId = (req as any).user.userId;
+    const { id } = req.params;
+
+    const message = await Message.findOneAndDelete({ _id: id, portfolioOwnerId: userId });
+    if (!message) {
+      sendError(res, 'Message not found', 404);
+      return;
+    }
+
+    sendSuccess(res, null, 'Message deleted successfully');
+  } catch (error) {
+    next(error);
+  }
+};

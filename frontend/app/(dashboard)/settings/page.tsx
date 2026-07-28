@@ -4,16 +4,25 @@ import { useTheme } from 'next-themes';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Moon, Sun, Monitor, LogOut, Mail, Settings as SettingsIcon } from 'lucide-react';
+import { Moon, Sun, Monitor, LogOut, Mail, Settings as SettingsIcon, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { FRONTEND_ROUTES } from '@shared/constants/routes';
+
+import { useRouter } from 'next/navigation';
 
 export default function SettingsPage() {
-  const { theme, setTheme } = useTheme();
-  const { logout } = useAuth();
+  const { theme } = useTheme();
+  const { logout, updateThemePreference } = useAuth();
+  const router = useRouter();
 
   return (
-    <div className="p-8 max-w-4xl mx-auto h-[calc(100vh-80px)] overflow-y-auto">
-      <div className="flex items-center gap-3 mb-8 border-b pb-4">
+    <div className="flex-1 w-full overflow-y-auto p-4 sm:p-8 py-8">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <Button variant="ghost" size="sm" onClick={() => router.back()} className="hover:bg-muted font-medium">
+          <ArrowLeft className="w-4 h-4 mr-2" /> Back
+        </Button>
+
+        <div className="flex items-center gap-3 border-b pb-4">
         <div className="w-12 h-12 bg-primary/10 flex items-center justify-center rounded-full text-primary">
           <SettingsIcon className="w-6 h-6" />
         </div>
@@ -34,7 +43,7 @@ export default function SettingsPage() {
               <Button
                 variant={theme === 'light' ? 'default' : 'outline'}
                 className="flex-1 justify-start"
-                onClick={() => setTheme('light')}
+                onClick={() => updateThemePreference('light')}
               >
                 <Sun className="w-4 h-4 mr-2" />
                 Light
@@ -42,7 +51,7 @@ export default function SettingsPage() {
               <Button
                 variant={theme === 'dark' ? 'default' : 'outline'}
                 className="flex-1 justify-start"
-                onClick={() => setTheme('dark')}
+                onClick={() => updateThemePreference('dark')}
               >
                 <Moon className="w-4 h-4 mr-2" />
                 Dark
@@ -50,7 +59,7 @@ export default function SettingsPage() {
               <Button
                 variant={theme === 'system' ? 'default' : 'outline'}
                 className="flex-1 justify-start"
-                onClick={() => setTheme('system')}
+                onClick={() => updateThemePreference('system')}
               >
                 <Monitor className="w-4 h-4 mr-2" />
                 System
@@ -87,6 +96,7 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
       </div>
+    </div>
     </div>
   );
 }

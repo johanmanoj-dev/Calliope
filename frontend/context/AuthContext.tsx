@@ -6,12 +6,15 @@ import { useRouter } from 'next/navigation';
 import { authService } from '../services/auth';
 import type { IUser } from '@shared/types/user';
 import { FRONTEND_ROUTES } from '@shared/constants/routes';
+import { useTheme } from 'next-themes';
 
 interface AuthContextType {
   user: IUser | null;
   isLoading: boolean;
   login: (credential: string) => Promise<void>;
   logout: () => Promise<void>;
+  updateProfilePicture: (profilePicture: string) => Promise<void>;
+  updateThemePreference: (theme: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,6 +22,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { setTheme } = useTheme();
   
   const { data: user, isLoading } = useQuery({
     queryKey: ['auth', 'me'],
@@ -28,19 +32,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
+    if (user) {
+      setTheme(user.themePreference || 'dark');
+    }
+  }, [user, setTheme]);
+
+  useEffect(() => {
     const handleAuthExpired = () => {
       queryClient.setQueryData(['auth', 'me'], null);
-      router.push(FRONTEND_ROUTES.HOME);
+      setTheme('dark');
+      // Don't redirect if on a public page
+      if (!window.location.pathname.startsWith('/p/')) {
+        router.push(FRONTEND_ROUTES.HOME);
+      }
     };
 
     window.addEventListener('auth:expired', handleAuthExpired);
     return () => window.removeEventListener('auth:expired', handleAuthExpired);
-  }, [queryClient, router]);
+  }, [queryClient, router, setTheme]);
 
   const loginMutation = useMutation({
     mutationFn: authService.loginWithGoogle,
     onSuccess: (data) => {
       queryClient.setQueryData(['auth', 'me'], data);
+      setTheme(data.themePreference || 'dark');
       router.push(FRONTEND_ROUTES.DASHBOARD);
     },
   });
@@ -50,7 +65,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onSuccess: () => {
       queryClient.setQueryData(['auth', 'me'], null);
       queryClient.clear();
-      router.push(FRONTEND_ROUTES.HOME);
+      setTheme('dark');
+      // Don't redirect if on a public page
+      if (!window.location.pathname.startsWith('/p/')) {
+        router.push(FRONTEND_ROUTES.HOME);
+      }
+    },
+  });
+
+  const updatePfpMutation = useMutation({
+    mutationFn: authService.updateProfilePicture,
+    onSuccess: (data) => {
+      queryClient.setQueryData(['auth', 'me'], data);
+    },
+  });
+
+  const updateThemeMutation = useMutation({
+    mutationFn: authService.updateThemePreference,
+    onSuccess: (data) => {
+      queryClient.setQueryData(['auth', 'me'], data);
+      setTheme(data.themePreference || 'dark');
     },
   });
 
@@ -62,6 +96,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await logoutMutation.mutateAsync();
   };
 
+  const updateProfilePicture = async (profilePicture: string) => {
+    await updatePfpMutation.mutateAsync(profilePicture);
+  };
+
+  const updateThemePreference = async (theme: string) => {
+    await updateThemeMutation.mutateAsync(theme);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -69,6 +111,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isLoading,
         login,
         logout,
+        updateProfilePicture,
+        updateThemePreference,
       }}
     >
       {children}
