@@ -16,7 +16,7 @@ export const uploadImage = async (file: File): Promise<string> => {
     publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY || '',
     urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT || '',
     ...authParams,
-  });
+  } as any);
 
-  return result.url;
+  return (result as any).url || '';
 };
