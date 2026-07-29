@@ -53,19 +53,19 @@ export function ContactForm({ slug }: { slug: string }) {
 
       <div className="space-y-2">
         <Label htmlFor="visitorName">Name</Label>
-        <Input id="visitorName" {...form.register('visitorName')} disabled={mutation.isPending} className="border border-black/20 dark:border-white/20" />
+        <Input id="visitorName" {...form.register('visitorName')} disabled={mutation.isPending} className="bg-current/[0.04] border border-current/25 focus:border-current/50 focus:bg-current/[0.06] transition-all" />
         {form.formState.errors.visitorName && <p className="text-sm text-destructive">{form.formState.errors.visitorName.message}</p>}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="visitorContact">Email or Phone</Label>
-        <Input id="visitorContact" {...form.register('visitorContact')} disabled={mutation.isPending} className="border border-black/20 dark:border-white/20" />
+        <Input id="visitorContact" {...form.register('visitorContact')} disabled={mutation.isPending} className="bg-current/[0.04] border border-current/25 focus:border-current/50 focus:bg-current/[0.06] transition-all" />
         {form.formState.errors.visitorContact && <p className="text-sm text-destructive">{form.formState.errors.visitorContact.message}</p>}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="message">Message</Label>
-        <Textarea id="message" {...form.register('message')} rows={5} disabled={mutation.isPending} className="border border-black/20 dark:border-white/20" />
+        <Textarea id="message" {...form.register('message')} rows={5} disabled={mutation.isPending} className="bg-current/[0.04] border border-current/25 focus:border-current/50 focus:bg-current/[0.06] transition-all" />
         {form.formState.errors.message && <p className="text-sm text-destructive">{form.formState.errors.message.message}</p>}
       </div>
 

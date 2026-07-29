@@ -153,16 +153,18 @@ export function Hero() {
           ) : (
             <div className="flex justify-center">
               <div className="scale-[1.05] origin-center">
-                <GoogleLogin
-                  onSuccess={(res) => {
-                    if (res.credential) login(res.credential);
-                  }}
-                  onError={() => console.error('Login Failed')}
-                  useOneTap
-                  theme="filled_black"
-                  shape="pill"
-                  text="continue_with"
-                />
+                <div className="rounded-full overflow-hidden" style={{ background: '#e8e4df' }}>
+                  <GoogleLogin
+                    onSuccess={(res) => {
+                      if (res.credential) login(res.credential);
+                    }}
+                    onError={() => console.error('Login Failed')}
+                    useOneTap
+                    theme="filled_black"
+                    shape="pill"
+                    text="continue_with"
+                  />
+                </div>
               </div>
             </div>
           )}

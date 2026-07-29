@@ -129,3 +129,15 @@
     @apply font-sans;
   }
 }
+
+/* ── Google OAuth button icon circle tint ─────────────────────────────────── */
+/* The Google "G" logo sits inside a white circle rendered by Google's iframe.
+   We can't style the iframe contents, but we wrap it in a container that has
+   a subtle background-color visible behind the button edges, and we apply a
+   slight sepia/brightness filter on the outer wrapper so the white circle reads
+   as a warm off-white against dark and light backgrounds. */
+div[class*="scale-"] > div[data-locale],
+div[class*="scale-"] > div:has(> iframe),
+div[class*="scale-"] iframe {
+  filter: brightness(0.93) sepia(0.08);
+}

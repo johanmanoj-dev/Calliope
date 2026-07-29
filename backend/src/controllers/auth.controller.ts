@@ -3,6 +3,8 @@ import { verifyGoogleToken, findOrCreateUser, generateSessionToken } from '../se
 import { sendSuccess, sendError } from '../utils/response';
 import { config } from '../config/env';
 import { User } from '../models/User';
+import { Portfolio } from '../models/Portfolio';
+import { Message } from '../models/Message';
 
 export const googleCallback = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -90,7 +92,7 @@ export const updateThemePreference = async (req: Request, res: Response, next: N
     const userId = (req as any).user.userId;
     const { themePreference } = req.body;
 
-    if (!themePreference || !['light', 'dark', 'system'].includes(themePreference)) {
+    if (!themePreference || !['light', 'dark'].includes(themePreference)) {
       sendError(res, 'Invalid themePreference', 400);
       return;
     }
@@ -102,6 +104,34 @@ export const updateThemePreference = async (req: Request, res: Response, next: N
     }
 
     sendSuccess(res, { user }, 'Theme preference updated successfully');
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteAccount = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const userId = (req as any).user.userId;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      sendError(res, 'User not found', 404);
+      return;
+    }
+
+    // Delete portfolio owned by this user
+    await Portfolio.deleteOne({ ownerId: user._id.toString() });
+
+    // Delete all contact messages sent to this user's portfolio
+    await Message.deleteMany({ portfolioOwnerId: user._id.toString() });
+
+    // Delete the user record
+    await User.findByIdAndDelete(userId);
+
+    // Clear the session cookie
+    res.clearCookie('token');
+
+    sendSuccess(res, null, 'Account deleted successfully');
   } catch (error) {
     next(error);
   }

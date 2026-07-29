@@ -30,15 +30,17 @@ export function Navbar() {
               </Link>
             ) : (
               <div className="scale-75 sm:scale-90 origin-right">
-                <GoogleLogin
-                  onSuccess={(res) => {
-                    if (res.credential) login(res.credential);
-                  }}
-                  onError={() => console.error('Login Failed')}
-                  theme="filled_black"
-                  shape="pill"
-                  text="signin_with"
-                />
+                <div className="rounded-full overflow-hidden" style={{ background: '#e8e4df' }}>
+                  <GoogleLogin
+                    onSuccess={(res) => {
+                      if (res.credential) login(res.credential);
+                    }}
+                    onError={() => console.error('Login Failed')}
+                    theme="filled_black"
+                    shape="pill"
+                    text="signin_with"
+                  />
+                </div>
               </div>
             )}
           </nav>

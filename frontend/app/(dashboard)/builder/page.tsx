@@ -140,7 +140,7 @@ export default function BuilderPage() {
         </aside>
 
         {/* Pane 2 — Section Editor */}
-        <section className="w-[380px] shrink-0 border-r flex flex-col bg-background">
+        <section className="w-[380px] shrink-0 border-r flex flex-col bg-muted/30">
           <div className="shrink-0 px-4 py-3 border-b flex items-center justify-between">
             <h2 className="text-sm font-semibold text-foreground capitalize">{activeLabel}</h2>
             <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Editor</span>
@@ -151,8 +151,8 @@ export default function BuilderPage() {
         </section>
 
         {/* Pane 3 — Live Preview */}
-        <main className="flex-1 min-w-0 flex flex-col bg-muted/40 dark:bg-slate-950/60 overflow-hidden">
-          <div className="shrink-0 px-5 py-2.5 border-b flex items-center justify-between bg-background/90 backdrop-blur-sm">
+        <main className="flex-1 min-w-0 flex flex-col bg-muted/30 overflow-hidden">
+          <div className="shrink-0 px-5 py-2.5 border-b flex items-center justify-between">
             <span className="text-sm font-extrabold tracking-tight text-foreground">Live Preview</span>
             <div className="flex items-center gap-4 text-xs">
               <div className="flex items-center gap-2 font-bold text-foreground" title="Page Background Color">
@@ -216,7 +216,7 @@ export default function BuilderPage() {
 
           {/* Editor tab */}
           {mobileTab === 'editor' && (
-            <div className="flex-1 overflow-y-auto flex flex-col bg-background">
+            <div className="flex-1 overflow-y-auto flex flex-col bg-muted/30">
               <div className="shrink-0 px-4 py-3 border-b flex items-center justify-between">
                 <h2 className="text-sm font-semibold text-foreground capitalize">{activeLabel}</h2>
                 <button
@@ -234,8 +234,8 @@ export default function BuilderPage() {
 
           {/* Preview tab */}
           {mobileTab === 'preview' && (
-            <div className="flex-1 overflow-y-auto flex flex-col bg-muted/40 dark:bg-slate-950/60">
-              <div className="shrink-0 px-4 py-2.5 border-b flex items-center justify-between bg-background/90">
+            <div className="flex-1 overflow-y-auto flex flex-col bg-muted/30">
+              <div className="shrink-0 px-4 py-2.5 border-b flex items-center justify-between">
                 <span className="text-sm font-extrabold tracking-tight text-foreground">Live Preview</span>
                 <div className="flex items-center gap-3 text-xs">
                   <div className="flex items-center gap-1.5 font-bold text-foreground">

@@ -4,7 +4,7 @@ export interface IUser {
   name: string;
   email: string;
   profilePicture: string;
-  themePreference: 'light' | 'dark' | 'system';
+  themePreference: 'light' | 'dark';
   portfolioRef?: string;
   createdAt: string;
   updatedAt: string;

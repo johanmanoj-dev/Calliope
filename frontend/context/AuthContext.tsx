@@ -15,6 +15,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
   updateProfilePicture: (profilePicture: string) => Promise<void>;
   updateThemePreference: (theme: string) => Promise<void>;
+  deleteAccount: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -88,6 +89,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
   });
 
+  const deleteAccountMutation = useMutation({
+    mutationFn: authService.deleteAccount,
+    onSuccess: () => {
+      queryClient.clear();
+      setTheme('dark');
+      router.push(FRONTEND_ROUTES.HOME);
+    },
+  });
+
   const login = async (credential: string) => {
     await loginMutation.mutateAsync(credential);
   };
@@ -104,6 +114,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await updateThemeMutation.mutateAsync(theme);
   };
 
+  const deleteAccount = async () => {
+    await deleteAccountMutation.mutateAsync();
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -113,6 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         logout,
         updateProfilePicture,
         updateThemePreference,
+        deleteAccount,
       }}
     >
       {children}

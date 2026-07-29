@@ -9,7 +9,7 @@ const UserSchema = new Schema<IUserDocument>(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     profilePicture: { type: String, required: true },
-    themePreference: { type: String, enum: ['light', 'dark', 'system'], default: 'system' },
+    themePreference: { type: String, enum: ['light', 'dark'], default: 'dark' },
     portfolioRef: { type: Schema.Types.ObjectId, ref: 'Portfolio' },
   },
   { timestamps: true }

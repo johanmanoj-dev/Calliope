@@ -30,4 +30,8 @@ export const authService = {
     const response = await api.patch('/api/auth/theme', { themePreference });
     return response.data.data.user;
   },
+
+  async deleteAccount(): Promise<void> {
+    await api.delete('/api/auth/account');
+  },
 };
