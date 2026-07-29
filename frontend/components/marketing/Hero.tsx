@@ -199,41 +199,14 @@ export function Hero() {
               className="rounded-t-lg overflow-hidden relative"
               style={{ aspectRatio: '16/10', background: '#111118' }}
             >
-              {/* Glassmorphic app preview placeholder */}
-              <div className="absolute inset-0 flex">
-                {/* Sidebar */}
-                <div className="w-[20%] border-r border-white/5 bg-white/[0.03] flex flex-col gap-1 p-2 shrink-0">
-                  <div className="text-[0.6vw] md:text-[8px] text-white/30 font-medium mb-2 tracking-widest uppercase px-1">Builder</div>
-                  {['Hero Section', 'About Me', 'Skills', 'Projects', 'Education', 'Experience', 'Contact'].map((s, i) => (
-                    <div
-                      key={s}
-                      className={`text-[0.5vw] md:text-[7px] px-1.5 py-1 rounded-md ${i === 0 ? 'bg-violet-600/80 text-white' : 'text-white/30 hover:bg-white/5'}`}
-                    >
-                      {s}
-                    </div>
-                  ))}
-                </div>
-                {/* Editor panel */}
-                <div className="w-[30%] border-r border-white/5 bg-white/[0.02] p-2 shrink-0">
-                  <div className="text-[0.6vw] md:text-[8px] text-white/40 mb-2 font-semibold">Hero Editor</div>
-                  {['Name', 'Title', 'Introduction', 'Location'].map((f) => (
-                    <div key={f} className="mb-1">
-                      <div className="text-[0.5vw] md:text-[6px] text-white/30 mb-0.5">{f}</div>
-                      <div className="h-4 sm:h-5 rounded bg-white/5 border border-white/8" />
-                    </div>
-                  ))}
-                </div>
-                {/* Preview pane */}
-                <div className="flex-1 bg-[#F2EAE0]/5 p-3 flex flex-col items-center gap-1.5">
-                  <div className="text-[0.6vw] md:text-[7px] text-white/30 self-start mb-1 font-medium">Live Preview</div>
-                  <div className="w-8 h-8 sm:w-16 sm:h-16 rounded-full bg-violet-500/20 border border-violet-400/20" />
-                  <div className="w-16 sm:w-32 h-1 rounded-full bg-white/10 mt-1" />
-                  <div className="w-10 sm:w-20 h-0.5 sm:h-1.5 rounded-full bg-white/6" />
-                  <div className="w-20 sm:w-40 h-0.5 sm:h-1 rounded-full bg-white/4 mt-1" />
-                  <div className="w-18 sm:w-36 h-0.5 sm:h-1 rounded-full bg-white/4" />
-                  <div className="w-16 sm:w-32 h-0.5 sm:h-1 rounded-full bg-white/4" />
-                </div>
-              </div>
+              <video
+                src="/calliope.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
               {/* Subtle gradient overlay at bottom for depth */}
               <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
             </div>
