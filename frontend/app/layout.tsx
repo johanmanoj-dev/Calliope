@@ -28,6 +28,11 @@ export const metadata: Metadata = {
   description:
     'Create, customize, and publish a professional portfolio without writing a single line of code. Sign in with Google and build your portfolio in minutes.',
   keywords: ['portfolio', 'builder', 'developer', 'resume', 'online portfolio'],
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
