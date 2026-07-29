@@ -61,6 +61,7 @@ export interface IThemeSettings {
   accentColor?: string;
   fontFamily?: string;
   isBoldText?: boolean;
+  fieldStyles?: Record<string, any>;
 }
 
 export interface IPortfolio {
