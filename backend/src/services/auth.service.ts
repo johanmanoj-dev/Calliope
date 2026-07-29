@@ -65,6 +65,6 @@ export const generateSessionToken = (user: any): string => {
   };
 
   return jwt.sign(payload, config.jwt.secret, {
-    expiresIn: config.jwt.expiresIn,
+    expiresIn: config.jwt.expiresIn as any,
   });
 };
