@@ -6,7 +6,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import Link from 'next/link';
 import { FRONTEND_ROUTES } from '@shared/constants/routes';
 import { useRef } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Info } from 'lucide-react';
 
 export function Hero() {
   const { user, login } = useAuth();
@@ -151,7 +151,16 @@ export function Hero() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           ) : (
-            <div className="flex justify-center">
+            <div className="flex flex-col items-center gap-4">
+              <div className="flex flex-col items-center gap-2 max-w-md px-4 py-2.5 rounded-2xl border border-violet-500/25 bg-violet-950/20 backdrop-blur-md shadow-[0_0_25px_rgba(124,58,237,0.2)]">
+                <div className="flex items-center gap-1.5 text-violet-300 font-semibold text-xs tracking-wide uppercase">
+                  <Info className="w-4 h-4 text-violet-400 animate-pulse drop-shadow-[0_0_10px_rgba(167,139,250,0.9)]" />
+                  <span>Notice</span>
+                </div>
+                <p className="text-xs text-[#9E9BAE]/90 text-center leading-relaxed">
+                  Backend may take a few seconds to wake up. If login stalls, try again.
+                </p>
+              </div>
               <div className="scale-[1.05] origin-center">
                 <div className="rounded-full overflow-hidden" style={{ background: '#e8e4df' }}>
                   <GoogleLogin
